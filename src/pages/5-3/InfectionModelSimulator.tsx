@@ -7,9 +7,7 @@ import ExperimentLayout from '../../components/ExperimentLayout'; // 引入通�
  */
 const InfectionModelSimulator: React.FC = () => {
   const title = "实验5-3: 传染病模型模拟器 (SIR 模型)";
-  const introduction = (
-    <p>这里是关于 SIR 传染病模型的介绍。该模型将人群分为易感者 (Susceptible)、感染者 (Infectious) 和康复者 (Recovered)。</p>
-  );
+  const introduction = "这里是关于 SIR 传染病模型的介绍。该模型将人群分为易感者 (Susceptible)、感染者 (Infectious) 和康复者 (Recovered)。";
   const codeSnippet = `// 核心代码示例
 // 模拟 SIR 模型逻辑
 const simulateSIR = () => {

@@ -39,7 +39,7 @@ const PARAM_CONFIG = [
  * @param {NetworkGraphProps} props - 组件的属性
  * @returns {JSX.Element}
  */
-const NetworkGraph: React.FC<NetworkGraphProps> = ({ type }) => {
+const NetworkGraph: React.FC<NetworkGraphProps> = () => {
   const [networkData, setNetworkData] = useState<NetworkData | null>(null);
   const [params, setParams] = useState<StarNetworkParams>(DEFAULT_PARAMS);
   const [metrics, setMetrics] = useState({

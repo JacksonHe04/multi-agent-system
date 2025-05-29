@@ -30,7 +30,7 @@ const DEFAULT_PARAMS: GlobalCouplingNetworkParams = {
 // 参数配置
 const PARAM_CONFIG = [
   {
-    id: "numNodes",
+    id: "numNodes" as const,
     label: "节点数量",
     min: 2,
     max: 100
