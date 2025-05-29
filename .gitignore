@@ -1,59 +1,24 @@
-/torch
-
-# 操作系统生成的文件
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Thumbs.db
-ehthumbs.db
-
-# IDE和编辑器文件
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# 依赖目录
-/node_modules/
-/vendor/
-
-# 编译输出
-/dist/
-/build/
-/out/
-*.class
-*.o
-*.pyc
-
-# 日志文件
+# Logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# 环境配置文件
-.env
-.env.local
-.env.*.local
+node_modules
+dist
+dist-ssr
+*.local
 
-# 临时文件
-/tmp/
-/temp/
-
-# 缓存文件
-.cache/
-.sass-cache/
-
-# 测试覆盖率报告
-/coverage/
-
-# 本地配置文件
-config.local.js
-config.dev.js
-
-# 包管理器文件
-package-lock.json
-yarn.lock.DS_Store
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
