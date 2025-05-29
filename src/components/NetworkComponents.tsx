@@ -105,7 +105,7 @@ export const defaultForceGraphConfig = {
   linkCurvature: 0.1,
   nodeAutoColorBy: "id",
   width: 600,
-  height: 600,
+  height: 500,
 };
 
 // 通用网络图组件

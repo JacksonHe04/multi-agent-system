@@ -32,7 +32,7 @@ const ExperimentLayout: React.FC<ExperimentLayoutProps> = ({
   codeSnippet,
   displayArea,
   inputParametersArea,
-  metricsArea, // 解构新增属性
+  metricsArea,
 }) => {
   return (
     <div className="container mx-auto p-4">
@@ -59,12 +59,12 @@ const ExperimentLayout: React.FC<ExperimentLayoutProps> = ({
             </div>
           )}
 
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">核心代码</h2>
             <pre className="bg-gray-800 text-white p-4 rounded-md overflow-auto">
               <code>{codeSnippet}</code>
             </pre>
-          </div>
+          </div> */}
         </div>
 
         <div className="md:col-span-1">
