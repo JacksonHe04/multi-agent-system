@@ -25,23 +25,29 @@ const ExperimentLayout: React.FC<ExperimentLayoutProps> = ({
 }) => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">{title}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">{title}</h1>
 
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">介绍</h2>
-        <div className="bg-gray-100 p-4 rounded-md">{introduction}</div>
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="md:col-span-1">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold mb-2">介绍</h2>
+            <div className="bg-gray-100 p-4 rounded-md">{introduction}</div>
+          </div>
 
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">核心代码</h2>
-        <pre className="bg-gray-800 text-white p-4 rounded-md overflow-auto">
-          <code>{codeSnippet}</code>
-        </pre>
-      </div>
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold mb-2">核心代码</h2>
+            <pre className="bg-gray-800 text-white p-4 rounded-md overflow-auto">
+              <code>{codeSnippet}</code>
+            </pre>
+          </div>
+        </div>
 
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">展示区域</h2>
-        <div className="bg-white p-4 rounded-md shadow-md">{displayArea}</div>
+        <div className="md:col-span-1">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold mb-2">展示区域</h2>
+            <div className="bg-white p-4 rounded-md shadow-md">{displayArea}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

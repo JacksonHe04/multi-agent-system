@@ -40,7 +40,7 @@ const data = {
 
 return <ForceGraph2D graphData={data} />;`;
 
-  const displayArea = <ForceGraph2D graphData={data} />;
+  const displayArea = <ForceGraph2D graphData={data} width={600} height={400} />;
 
   return (
     <ExperimentLayout

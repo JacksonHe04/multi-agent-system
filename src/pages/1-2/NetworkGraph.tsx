@@ -40,7 +40,7 @@ const data = {
 
 return <ForceGraph2D graphData={data} />;`;
 
-  const displayArea = <ForceGraph2D graphData={data} />;
+  const displayArea = <ForceGraph2D graphData={data} width={600} height={400} />; // 将宽度设置为 undefined，使其自适应父容器
 
   return (
     <ExperimentLayout

@@ -21,7 +21,7 @@ const NavigationBar: React.FC = () => {
 
   return (
     <nav className="bg-white p-4 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-center items-center">
         
         <ul className="flex space-x-4">
           {navLinks.map((link) => (
