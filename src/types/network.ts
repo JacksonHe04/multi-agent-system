@@ -5,6 +5,7 @@
  */
 export interface Node {
   id: string;
+  size?: number;
 }
 
 /**
@@ -16,6 +17,7 @@ export interface Node {
 export interface Link {
   source: string;
   target: string;
+  value?: number;
 }
 
 /**

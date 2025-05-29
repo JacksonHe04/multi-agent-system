@@ -1,53 +1,110 @@
-import React from 'react';
-import { ForceGraph2D } from 'react-force-graph'; // 假设使用 react-force-graph
-import ExperimentLayout from '../../components/ExperimentLayout'; // 引入通用布局组件
+import React, { useState, useEffect, useCallback } from "react";
+import type { NetworkData } from "../../types/network";
+import {
+  calculateAveragePathLength,
+  calculateClusteringCoefficient,
+} from "../../utils/networkAlgorithms";
+import { generateRandomNetwork } from "./networkGenerators";
+import ExperimentLayout from "../../components/ExperimentLayout";
+import { codeSnippet, introduction } from "./config";
+import { 
+  ParameterInput, 
+  NetworkMetrics, 
+  NetworkGraphDisplay 
+} from "../../components/NetworkComponents";
 
+// 类型定义
 interface NetworkGraphProps {
-  type: 'global-coupling' | 'nearest-neighbor' | 'star' | 'random';
+  type: "random";
 }
 
-/**
- * 网络图组件
- * 根据传入的类型展示不同的网络图。
- * @param {NetworkGraphProps} props - 组件的属性
- * @param {'global-coupling' | 'nearest-neighbor' | 'star' | 'random'} props.type - 网络图类型
- * @returns {JSX.Element}
- */
-const NetworkGraph: React.FC<NetworkGraphProps> = ({ type }) => {
-  // 示例数据，实际应用中会根据 type 生成不同的网络结构
-  const data = {
-    nodes: [{ id: 'node1' }, { id: 'node2' }, { id: 'node3' }],
-    links: [
-      { source: 'node1', target: 'node2' },
-      { source: 'node2', target: 'node3' },
-    ],
-  };
+interface RandomNetworkParams {
+  numNodes: number;
+  probability: number;
+}
 
-  const title = `实验1-4: ${type} 网络图`;
-  const introduction = (
-    <p>这里是关于 ${type} 网络图的介绍。它展示了节点和它们之间的连接关系。</p>
-  );
-  const codeSnippet = `// 核心代码示例
-import { ForceGraph2D } from 'react-force-graph';
-
-const data = {
-  nodes: [{ id: 'node1' }, { id: 'node2' }, { id: 'node3' }],
-  links: [
-    { source: 'node1', target: 'node2' },
-    { source: 'node2', target: 'node3' },
-  ],
+// 默认参数
+const DEFAULT_PARAMS: RandomNetworkParams = {
+  numNodes: 50,
+  probability: 0.1
 };
 
-return <ForceGraph2D graphData={data} />;`;
+// 参数配置
+const PARAM_CONFIG: {
+  id: keyof RandomNetworkParams;
+  label: string;
+  min: number;
+  max: number;
+  step?: number;
+}[] = [
+  {
+    id: "numNodes",
+    label: "节点数量",
+    min: 2,
+    max: 100
+  },
+  {
+    id: "probability",
+    label: "连接概率",
+    min: 0,
+    max: 1,
+    step: 0.01
+  }
+];
 
-  const displayArea = <ForceGraph2D graphData={data} width={600} height={400} />;
+/**
+ * @function NetworkGraph
+ * @description 实验1-4的入口组件，负责集成随机网络生成、计算和可视化。
+ * @param {NetworkGraphProps} props - 组件属性。
+ * @returns {JSX.Element} 渲染的网络图组件。
+ */
+const NetworkGraph: React.FC<NetworkGraphProps> = ({ type }) => {
+  const [networkData, setNetworkData] = useState<NetworkData | null>(null);
+  const [params, setParams] = useState<RandomNetworkParams>(DEFAULT_PARAMS);
+  const [metrics, setMetrics] = useState({
+    averagePathLength: null as number | null,
+    clusteringCoefficient: null as number | null
+  });
+
+  // 处理参数变化
+  const handleParamChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setParams(prev => ({
+      ...prev,
+      [name]: Number(value)
+    }));
+  }, []);
+
+  // 更新网络数据和指标
+  useEffect(() => {
+    if (type === "random") {
+      const data = generateRandomNetwork(params.numNodes, params.probability);
+      setNetworkData(data);
+      
+      const avgPath = calculateAveragePathLength(data);
+      const clusteringCoeff = calculateClusteringCoefficient(data);
+      
+      setMetrics({
+        averagePathLength: avgPath,
+        clusteringCoefficient: clusteringCoeff
+      });
+    }
+  }, [type, params]);
 
   return (
     <ExperimentLayout
-      title={title}
+      title="实验1-4：随机网络"
       introduction={introduction}
       codeSnippet={codeSnippet}
-      displayArea={displayArea}
+      inputParametersArea={
+        <ParameterInput 
+          params={params} 
+          onParamChange={handleParamChange}
+          paramConfig={PARAM_CONFIG}
+        />
+      }
+      metricsArea={<NetworkMetrics metrics={metrics} />}
+      displayArea={<NetworkGraphDisplay networkData={networkData} />}
     />
   );
 };
