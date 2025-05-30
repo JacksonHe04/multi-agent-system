@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import type { Network, SIRParameters, Node } from './types';
+import type { Network, SIRParameters } from './types';
 import { generateRandomNetwork, updateNetworkState } from './calculations';
 import ExperimentLayout from '../../components/ExperimentLayout';
 import { ParameterInput, NetworkGraphDisplay } from '../../components/NetworkComponents';
@@ -88,8 +88,9 @@ const EpidemicModel: React.FC = () => {
   }, [isRunning, params]);
 
   // 节点颜色映射
-  const getNodeColor = useCallback((node: Node) => {
-    switch (node.state) {
+  const getNodeColor = useCallback((node: { id: string; [key: string]: unknown }) => {
+    const state = node.state as 'S' | 'I' | 'R';
+    switch (state) {
       case 'S': return '#4CAF50';  // 绿色 - 易感
       case 'I': return '#F44336';  // 红色 - 感染
       case 'R': return '#9E9E9E';  // 灰色 - 恢复
@@ -98,7 +99,10 @@ const EpidemicModel: React.FC = () => {
   }, []);
 
   // 节点标签
-  const getNodeLabel = useCallback((node: Node) => `节点 ${node.id}: ${node.state}`, []);
+  const getNodeLabel = useCallback((node: { id: string; [key: string]: unknown }) => {
+    const state = node.state as 'S' | 'I' | 'R';
+    return `节点 ${node.id}: ${state}`;
+  }, []);
 
   return (
     <ExperimentLayout
@@ -121,7 +125,10 @@ const EpidemicModel: React.FC = () => {
       metricsArea={<StatusMetrics network={network} simulationTime={simulationTime} />}
       displayArea={
         <NetworkGraphDisplay
-          networkData={network}
+          networkData={{
+            nodes: network.nodes.map(node => ({ ...node })),
+            links: network.links.map(link => ({ ...link }))
+          }}
           nodeColor={getNodeColor}
           nodeLabel={getNodeLabel}
           width={600}

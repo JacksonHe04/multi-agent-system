@@ -6,6 +6,7 @@
 export interface Node {
   id: string;
   size?: number;
+  [key: string]: unknown;
 }
 
 /**
@@ -18,6 +19,7 @@ export interface Link {
   source: string;
   target: string;
   value?: number;
+  [key: string]: unknown;
 }
 
 /**
