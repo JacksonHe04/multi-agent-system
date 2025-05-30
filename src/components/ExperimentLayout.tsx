@@ -3,7 +3,6 @@ import React from 'react';
 interface ExperimentLayoutProps {
   title: string;
   introduction: string;
-  codeSnippet: string;
   displayArea: React.ReactNode;
   /**
    * @property {React.ReactNode} inputParametersArea - 用于输入参数的区域，内容由父组件提供。
@@ -21,7 +20,6 @@ interface ExperimentLayoutProps {
  * @param {ExperimentLayoutProps} props - 组件的属性
  * @param {string} props.title - 页面标题
  * @param {string} props.introduction - 实验介绍文本
- * @param {string} props.codeSnippet - 核心代码片段字符串
  * @param {React.ReactNode} props.displayArea - 实验的核心展示内容（如网络图、模拟器）
  * @param {React.ReactNode} [props.inputParametersArea] - 用于输入参数的区域，内容由父组件提供。
  * @returns {JSX.Element}
@@ -29,7 +27,6 @@ interface ExperimentLayoutProps {
 const ExperimentLayout: React.FC<ExperimentLayoutProps> = ({
   title,
   introduction,
-  codeSnippet,
   displayArea,
   inputParametersArea,
   metricsArea,

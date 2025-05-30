@@ -130,7 +130,7 @@ function processInfections(
     const infectedNeighbors = findInfectedNeighbors(susceptible, infectedNodes, network);
     
     if (infectedNeighbors.length > 0) {
-      for (const infectedId of infectedNeighbors) {
+      for (const _ of infectedNeighbors) {
         const randomValue = Math.random();
         if (randomValue < params.beta) {
           nodesToInfect.push(susceptible);

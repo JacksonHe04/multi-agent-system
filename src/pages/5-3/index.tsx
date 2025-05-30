@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import type { Network, SIRParameters, TimeSeriesData, Node } from './types';
-import { generateRandomNetwork, updateNetworkState, calculateTimeSeriesData } from './calculations';
+import type { Network, SIRParameters, Node } from './types';
+import { generateRandomNetwork, updateNetworkState } from './calculations';
 import ExperimentLayout from '../../components/ExperimentLayout';
 import { ParameterInput, NetworkGraphDisplay } from '../../components/NetworkComponents';
-import { introduction, codeSnippet, defaultParams, paramConfig } from './config';
+import { introduction, defaultParams, paramConfig } from './config';
 
 // 状态统计组件
 const StatusMetrics: React.FC<{ network: Network }> = ({ network }) => (
@@ -49,43 +49,37 @@ const ControlButtons: React.FC<{
 const EpidemicModel: React.FC = () => {
   // 状态管理
   const [params, setParams] = useState<SIRParameters>(defaultParams);
-  const [network, setNetwork] = useState<Network>(generateRandomNetwork(defaultParams));
-  const [timeSeries, setTimeSeries] = useState<TimeSeriesData[]>([]);
+  const [network, setNetwork] = useState<Network>(() => generateRandomNetwork(params));
   const [isRunning, setIsRunning] = useState(false);
   const [simulationTime, setSimulationTime] = useState(0);
-
-  // 更新网络状态
-  const updateSimulation = useCallback(() => {
-    if (!isRunning) return;
-
-    setNetwork(prevNetwork => {
-      const newNetwork = updateNetworkState(prevNetwork, params);
-      const newTimeSeries = calculateTimeSeriesData(newNetwork, simulationTime);
-      setTimeSeries(prev => [...prev, newTimeSeries]);
-      setSimulationTime(prev => prev + 1);
-      return newNetwork;
-    });
-  }, [isRunning, params, simulationTime]);
 
   // 重置模拟
   const resetSimulation = useCallback(() => {
     setNetwork(generateRandomNetwork(params));
-    setTimeSeries([]);
     setSimulationTime(0);
+    setIsRunning(false);
   }, [params]);
 
-  // 更新参数
+  // 处理参数变化
   const handleParamChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setParams(prev => ({ ...prev, [name]: parseFloat(value) }));
+    setParams(prev => ({
+      ...prev,
+      [name]: Number(value)
+    }));
   }, []);
 
-  // 自动更新
+  // 更新网络状态
   useEffect(() => {
     if (!isRunning) return;
-    const interval = setInterval(updateSimulation, 1000);
-    return () => clearInterval(interval);
-  }, [isRunning, updateSimulation]);
+
+    const timer = setInterval(() => {
+      setNetwork(prev => updateNetworkState(prev, params));
+      setSimulationTime(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isRunning, params]);
 
   // 节点颜色映射
   const getNodeColor = useCallback((node: Node) => {
@@ -104,7 +98,6 @@ const EpidemicModel: React.FC = () => {
     <ExperimentLayout
       title="实验5-3: 传染病模型模拟（SIR）"
       introduction={introduction}
-      codeSnippet={codeSnippet}
       inputParametersArea={
         <>
           <ParameterInput
