@@ -3,10 +3,10 @@ import type { SIRParameters } from './types';
 // 默认参数配置
 export const defaultParams: SIRParameters = {
   beta: 0.5,           // 传播率
-  gamma: 0,            // 恢复率
+  gamma: 0.05,           // 恢复率
   initialInfected: 3,  // 初始感染人数
   totalNodes: 100,     // 总节点数
-  connectionProbability: 0.9  // 连接概率
+  connectionProbability: 0.1  // 连接概率
 };
 
 // 参数配置项
@@ -65,4 +65,4 @@ const updateNetworkState = (network: Network, params: SIRParameters) => {
   return network;
 };`;
 
-export const introduction = `这是一个基于 SIR（易感-感染-恢复）模型的传染病传播模拟。通过调整传播率、恢复率等参数，可以观察疾病在网络中的传播过程。`; 
+export const introduction = `这是一个基于 SIR（易感-感染-恢复）模型的传染病传播模拟。通过调整传播率、恢复率等参数，可以观察疾病在网络中的传播过程。`;

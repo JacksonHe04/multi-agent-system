@@ -1,8 +1,5 @@
 import type { Network, Node, SIRParameters, TimeSeriesData, Link } from './types';
 
-// 网络状态类型
-type NodeState = 'S' | 'I' | 'R';
-
 // 网络统计信息接口
 interface NetworkStats {
   totalNodes: number;
@@ -159,13 +156,26 @@ function findInfectedNeighbors(
 ): string[] {
   const neighbors = network.links
     .filter(link => {
-      const isConnected = link.source === node.id || link.target === node.id;
-      const isInfected = infectedNodes.some(inf => 
-        inf.id === (link.source === node.id ? link.target : link.source)
-      );
+      // 获取源和目标ID，处理可能的对象类型
+      const sourceId = typeof link.source === 'object' ? (link.source as any).id : link.source;
+      const targetId = typeof link.target === 'object' ? (link.target as any).id : link.target;
+      
+      // 检查连接
+      const isConnected = sourceId === node.id || targetId === node.id;
+      
+      // 获取邻居ID
+      const neighborId = sourceId === node.id ? targetId : sourceId;
+      
+      // 检查邻居是否被感染
+      const isInfected = infectedNodes.some(inf => inf.id === neighborId);
+      
       return isConnected && isInfected;
     })
-    .map(link => link.source === node.id ? link.target : link.source);
+    .map(link => {
+      const sourceId = typeof link.source === 'object' ? (link.source as any).id : link.source;
+      const targetId = typeof link.target === 'object' ? (link.target as any).id : link.target;
+      return sourceId === node.id ? targetId : sourceId;
+    });
   
   return neighbors;
 }
@@ -209,4 +219,4 @@ export function calculateTimeSeriesData(network: Network, simulationTime: number
     time: simulationTime,
     ...counts
   };
-} 
+}
