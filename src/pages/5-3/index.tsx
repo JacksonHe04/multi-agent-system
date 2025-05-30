@@ -6,19 +6,25 @@ import { ParameterInput, NetworkGraphDisplay } from '../../components/NetworkCom
 import { introduction, defaultParams, paramConfig } from './config';
 
 // 状态统计组件
-const StatusMetrics: React.FC<{ network: Network }> = ({ network }) => (
-  <div className="grid grid-cols-3 gap-4">
-    <div className="text-center">
-      <div className="text-green-500 font-bold">易感者</div>
-      <div>{network.nodes.filter(n => n.state === 'S').length}</div>
+const StatusMetrics: React.FC<{ network: Network; simulationTime: number }> = ({ network, simulationTime }) => (
+  <div>
+    <div className="text-center mb-4">
+      <div className="text-blue-500 font-bold">模拟时间</div>
+      <div>{simulationTime}</div>
     </div>
-    <div className="text-center">
-      <div className="text-red-500 font-bold">感染者</div>
-      <div>{network.nodes.filter(n => n.state === 'I').length}</div>
-    </div>
-    <div className="text-center">
-      <div className="text-gray-500 font-bold">恢复者</div>
-      <div>{network.nodes.filter(n => n.state === 'R').length}</div>
+    <div className="grid grid-cols-3 gap-4">
+      <div className="text-center">
+        <div className="text-green-500 font-bold">易感者</div>
+        <div>{network.nodes.filter(n => n.state === 'S').length}</div>
+      </div>
+      <div className="text-center">
+        <div className="text-red-500 font-bold">感染者</div>
+        <div>{network.nodes.filter(n => n.state === 'I').length}</div>
+      </div>
+      <div className="text-center">
+        <div className="text-gray-500 font-bold">恢复者</div>
+        <div>{network.nodes.filter(n => n.state === 'R').length}</div>
+      </div>
     </div>
   </div>
 );
@@ -112,7 +118,7 @@ const EpidemicModel: React.FC = () => {
           />
         </>
       }
-      metricsArea={<StatusMetrics network={network} />}
+      metricsArea={<StatusMetrics network={network} simulationTime={simulationTime} />}
       displayArea={
         <NetworkGraphDisplay
           networkData={network}

@@ -130,12 +130,10 @@ function processInfections(
     const infectedNeighbors = findInfectedNeighbors(susceptible, infectedNodes, network);
     
     if (infectedNeighbors.length > 0) {
-      for (const _ of infectedNeighbors) {
-        const randomValue = Math.random();
-        if (randomValue < params.beta) {
-          nodesToInfect.push(susceptible);
-          break;
-        }
+      // 只要有一个感染者邻居，就有机会被感染
+      const randomValue = Math.random();
+      if (randomValue < params.beta) {
+        nodesToInfect.push(susceptible);
       }
     }
   }
@@ -157,8 +155,8 @@ function findInfectedNeighbors(
   const neighbors = network.links
     .filter(link => {
       // 获取源和目标ID，处理可能的对象类型
-      const sourceId = typeof link.source === 'object' ? (link.source as any).id : link.source;
-      const targetId = typeof link.target === 'object' ? (link.target as any).id : link.target;
+      const sourceId = typeof link.source === 'object' ? (link.source as { id: string }).id : link.source;
+      const targetId = typeof link.target === 'object' ? (link.target as { id: string }).id : link.target;
       
       // 检查连接
       const isConnected = sourceId === node.id || targetId === node.id;
@@ -172,8 +170,8 @@ function findInfectedNeighbors(
       return isConnected && isInfected;
     })
     .map(link => {
-      const sourceId = typeof link.source === 'object' ? (link.source as any).id : link.source;
-      const targetId = typeof link.target === 'object' ? (link.target as any).id : link.target;
+      const sourceId = typeof link.source === 'object' ? (link.source as { id: string }).id : link.source;
+      const targetId = typeof link.target === 'object' ? (link.target as { id: string }).id : link.target;
       return sourceId === node.id ? targetId : sourceId;
     });
   

@@ -6,7 +6,7 @@ import {
   calculateClusteringCoefficient,
 } from "../../utils/networkAlgorithms";
 import ExperimentLayout from "../../components/ExperimentLayout";
-import { codeSnippet, introduction } from "./config";
+import { introduction } from "./config";
 import { 
   ParameterInput, 
   NetworkMetrics, 
@@ -92,7 +92,6 @@ const NetworkGraph: React.FC<NetworkGraphProps> = () => {
     <ExperimentLayout
       title={`实验1-2: 最近邻耦合网络 (N=${params.numNodes}, K=${params.k})`}
       introduction={introduction}
-      codeSnippet={codeSnippet}
       inputParametersArea={
         <ParameterInput 
           params={params} 

@@ -111,8 +111,8 @@ export const defaultForceGraphConfig = {
 // 通用网络图组件
 export interface NetworkGraphDisplayProps {
   networkData: NetworkData | null;
-  nodeColor?: (node: any) => string;
-  nodeLabel?: (node: any) => string;
+  nodeColor?: (node: { id: string; [key: string]: unknown }) => string;
+  nodeLabel?: (node: { id: string; [key: string]: unknown }) => string;
   width?: number;
   height?: number;
 }

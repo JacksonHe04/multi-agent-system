@@ -6,7 +6,7 @@ import {
 } from "../../utils/networkAlgorithms";
 import { generateRandomNetwork } from "./networkGenerators";
 import ExperimentLayout from "../../components/ExperimentLayout";
-import { codeSnippet, introduction } from "./config";
+import { introduction } from "./config";
 import { 
   ParameterInput, 
   NetworkMetrics, 
@@ -95,7 +95,6 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ type }) => {
     <ExperimentLayout
       title="实验1-4: 随机网络"
       introduction={introduction}
-      codeSnippet={codeSnippet}
       inputParametersArea={
         <ParameterInput 
           params={params} 

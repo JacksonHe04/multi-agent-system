@@ -8,7 +8,7 @@ import {
   NetworkMetrics, 
   NetworkGraphDisplay 
 } from '../../components/NetworkComponents';
-import { codeSnippet, introduction } from './config';
+import { introduction } from './config';
 
 interface NetworkGraphProps {
   type: 'star';
@@ -75,7 +75,6 @@ const NetworkGraph: React.FC<NetworkGraphProps> = () => {
     <ExperimentLayout
       title={`实验1-3: 星形网络 (N=${params.numNodes})`}
       introduction={introduction}
-      codeSnippet={codeSnippet}
       inputParametersArea={
         <ParameterInput 
           params={params} 
