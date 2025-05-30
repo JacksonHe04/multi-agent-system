@@ -1,3 +1,6 @@
+/torch
+/.trae/
+
 # Logs
 logs
 *.log
