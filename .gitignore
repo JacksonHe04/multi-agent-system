@@ -1,5 +1,7 @@
 /torch
 /.trae/
+/.cursor/
+/.vscode/
 
 # Logs
 logs
