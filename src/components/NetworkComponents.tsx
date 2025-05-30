@@ -111,9 +111,19 @@ export const defaultForceGraphConfig = {
 // 通用网络图组件
 export interface NetworkGraphDisplayProps {
   networkData: NetworkData | null;
+  nodeColor?: (node: any) => string;
+  nodeLabel?: (node: any) => string;
+  width?: number;
+  height?: number;
 }
 
-export const NetworkGraphDisplay: React.FC<NetworkGraphDisplayProps> = ({ networkData }) => {
+export const NetworkGraphDisplay: React.FC<NetworkGraphDisplayProps> = ({ 
+  networkData,
+  nodeColor,
+  nodeLabel,
+  width = 600,
+  height = 500
+}) => {
   if (!networkData) {
     return <div>加载网络数据...</div>;
   }
@@ -122,6 +132,10 @@ export const NetworkGraphDisplay: React.FC<NetworkGraphDisplayProps> = ({ networ
     <ForceGraph2D
       graphData={networkData}
       {...defaultForceGraphConfig}
+      nodeColor={nodeColor}
+      nodeLabel={nodeLabel}
+      width={width}
+      height={height}
     />
   );
 }; 

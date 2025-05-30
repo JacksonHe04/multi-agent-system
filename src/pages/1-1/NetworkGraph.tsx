@@ -78,7 +78,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ type }) => {
 
   return (
     <ExperimentLayout
-      title="实验1-1：全局耦合网络"
+      title="实验1-1: 全局耦合网络"
       introduction={introduction}
       codeSnippet={codeSnippet}
       inputParametersArea={

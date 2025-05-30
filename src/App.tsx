@@ -5,7 +5,7 @@ import NetworkGraph11 from './pages/1-1/NetworkGraph';
 import NetworkGraph12 from './pages/1-2/NetworkGraph';
 import NetworkGraph13 from './pages/1-3/NetworkGraph';
 import NetworkGraph14 from './pages/1-4/NetworkGraph';
-import InfectionModelSimulator53 from './pages/5-3/InfectionModelSimulator';
+import EpidemicModel from './pages/5-3/index';
 import NavigationBar from './components/NavigationBar'; // 引入 NavigationBar 组件
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         <Route path="/1-4" element={<NetworkGraph14 type="random" />} />
 
         {/* 实验选题5-3: 传染病模型 */}
-        <Route path="/5-3" element={<InfectionModelSimulator53 />} />
+        <Route path="/5-3" element={<EpidemicModel />} />
 
         {/* 默认路由，可以指向一个主页或者重定向到某个实验 */}
         <Route path="/" element={<HomePage />} />
