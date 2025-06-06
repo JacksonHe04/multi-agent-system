@@ -69,10 +69,15 @@ const EpidemicModel: React.FC = () => {
   // 处理参数变化
   const handleParamChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setParams(prev => ({
-      ...prev,
-      [name]: Number(value)
-    }));
+    setParams(prev => {
+      const newParams = {
+        ...prev,
+        [name]: Number(value)
+      };
+      // 当参数改变时重新生成网络
+      setNetwork(generateRandomNetwork(newParams));
+      return newParams;
+    });
   }, []);
 
   // 更新网络状态
